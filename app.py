@@ -3,7 +3,7 @@ from config import db, migrate
 from routes.user import user_bp
 
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///app.db'
+app.config['SQLALCHEMY_DATABASE_URI']='mysql+pymysql://root:@localhost:3306/app_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
 db.init_app(app)
