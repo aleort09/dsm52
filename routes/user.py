@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.userController import get_all_users, create_user, edit_user, delete_user
+from controllers.userController import get_all_users, create_user, edit_user, delete_user, login_user
 
 user_bp=Blueprint('users', __name__)
 
@@ -13,9 +13,11 @@ def create():
     data = request.get_json()
     name = data.get('name')
     email = data.get('email')
-    return create_user(name, email)
+    password = data.get('password')
+    new= create_user(name, email, password)
+    return jsonify(new)
 
-@user_bp.route('/edit/<int:id>', methods=['POST'])
+@user_bp.route('/edit/<id>', methods=['POST'])
 def edit(id):
     data=request.get_json()
     name=data.get('name')
@@ -26,3 +28,7 @@ def edit(id):
 def delete(id):
     return delete_user(id)
 
+@user_bp.route('/login', methods=['POST'])
+def login():
+    data=request.get_json()
+    return login_user(data['email'], data['password'])
